@@ -1,3 +1,3 @@
 # amazona
 Using Nodejs and reactjs
-A website of amazon
+A website like amazon
