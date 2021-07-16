@@ -1,23 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Product from '../components/Product';
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Product from "../components/Product";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 export default function HomeScreen() {
-  const [products, setProducts] = useState([]);  //React Hook
-  useEffect(()=>{
-    const fetchData = async () =>{
-      const { data } = await axios.get('/api/products');
-      setProducts(data);
+  const [products, setProducts] = useState([]); //React Hook
+  const [loading, setLoading] = useState(false); //React Hook
+  const [error, setError] = useState(false); //React Hook
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios.get("/api/products");
+        setLoading(false);
+        setProducts(data);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
     };
     fetchData();
-  },[])
-    return (
-        <div>
-            <div className="row center">
-            {products.map((product) => (
-              <Product key={product._id} product={product}></Product>
-            ))}
-          </div>
+  }, []);
+  return (
+    <div>
+      {loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox variant='danger'>{error}</MessageBox>
+      ) : (
+        <div className="row center">
+          {products.map((product) => (
+            <Product key={product._id} product={product}></Product>
+          ))}
         </div>
-    )
+      )}
+    </div>
+  );
 }
