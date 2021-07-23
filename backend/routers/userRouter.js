@@ -8,7 +8,7 @@ const userRouter = express.Router(); //express.Router() is a function
 userRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
-      await User.remove({}); // To remove Users from database
+      // await User.remove({}); // To remove Users from database
     const createdUser = await User.insertMany(data.users);
     res.send({ createdUser });
   })
