@@ -5,11 +5,21 @@ import userRouter from "./routers/userRouter.js";
 
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-});
+const connectToDb = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
+    console.log("Db connection success");
+  } catch (err) {
+    console.log(err.message);
+    // process.exit(1)
+  }
+};
+
+  connectToDb();
 
 
 app.use("/api/users", userRouter);

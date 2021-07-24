@@ -14,4 +14,6 @@ userRouter.get(
   })
 );
 
+userRouter.post('/signin')
+
 export default userRouter;
