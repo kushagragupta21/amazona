@@ -1,17 +1,27 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
 
+dotenv.config();
+
 const app = express();
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
 
 const connectToDb = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
+    await mongoose.connect(
+      process.env.MONGODB_URL || "mongodb://localhost/amazona",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+      }
+    );
     console.log("Db connection success");
   } catch (err) {
     console.log(err.message);
@@ -19,11 +29,10 @@ const connectToDb = async () => {
   }
 };
 
-  connectToDb();
-
+connectToDb();
 
 app.use("/api/users", userRouter);
-app.use("/api/products",productRouter);
+app.use("/api/products", productRouter);
 
 app.get("/", (req, res) => {
   res.send("server is ready");
