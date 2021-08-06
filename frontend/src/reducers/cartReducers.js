@@ -5,6 +5,8 @@ import {
   CART_SAVE_PAYMENT_METHOD,
 } from "../constants/cartConstants";
 
+import { CART_EMPTY } from "../constants/cartConstants";
+
 export const CartReducer = (state = { cartItems: [] }, action) => {
   switch (action.type) {
     case CART_ADD_ITEM:
@@ -31,6 +33,8 @@ export const CartReducer = (state = { cartItems: [] }, action) => {
 
     case CART_SAVE_PAYMENT_METHOD:
       return { ...state, paymentMethod: action.payload };
+    case CART_EMPTY:
+      return { ...state, cartItems: [] };
     default:
       return state;
   }
