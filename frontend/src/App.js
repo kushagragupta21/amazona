@@ -1,6 +1,7 @@
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import React from "react";
 import HomeScreen from "./screens/HomeScreen";
+import OrderScreen from "./screens/OrderScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +25,6 @@ function App() {
     dispatch(signout());
   };
 
-  
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -66,8 +66,8 @@ function App() {
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
           <Route path="/payment" component={PaymentMethodScreen}></Route>
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
+          <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/" component={HomeScreen} exact></Route>
-
         </main>
 
         <footer className="row center">All rights reserved</footer>
